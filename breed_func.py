@@ -21,6 +21,9 @@ class NameNum:
     def get_num(self, name: str):
         return self.name2num[name]
 
+    def get_names(self, num_list):
+        return [self.num2name[str(num)] for num in num_list]
+
 class BreedEquals:
     def __init__(self, csv_path='palworld_breed.csv'):
         # load csv
@@ -53,6 +56,11 @@ class BreedEquals:
             if p2 in self.offsprings[p1]:
                 return self.offsprings[p1][p2]
         return None
+
+    def get_parents(self, off:str):
+        if off in self.parents:
+            return self.parents[off]
+        return None, None
 
 
 class Closure:
@@ -125,13 +133,52 @@ class Closure:
             s += f'{num2name(off)} <- {num2name(p1)} + {num2name(p2)}\n'
         return s
 
+class Parents:
+    def __init__(self, start_num):
+        self.start_num = str(start_num)
+        self.be = BreedEquals()
+        self.nn = NameNum()
+        self.parents = {}
+        check_list = [self.start_num]
+        checked_list = [None]
+        while check_list:
+            off = check_list.pop()
+            p1, p2 = self.be.get_parents()
+            if p1 not in checked_list:
+                check_list.append(p1)
+            if p2 not in checked_list:
+                check_list.append(p2)
+            if p1:
+                self.parents[p1] = off
+            if p2:
+            self.parents[p2] = off
+            checked_list.append(off)
+
+    def check_parents(self, p_num):
+        p = str(p_num)
+        if p in list(self.parents.keys()):
+            return True
+        else:
+            return False
+
+    def check_parents_not_included(self, closure: Closure):
+        nums = closure.get_closure_all_num()
+        not_included = []
+        for p in list(self.parents.keys()):
+            if p not in nums:
+                not_included.append(p)
+        return not_included
+
 if __name__ == '__main__':
-    #nn = NameNum()
+    nn = NameNum()
     # print(nn.name2num, nn.num2name)
-    #be = BreedEquals()
+    be = BreedEquals()
     # print(be.offsprings, be.parents)
     c = Closure()
     c.add_pals([1,2,3,4,5,11,12,13,14,15])
     print(c.get_closure_key_as_name())
     print(c.check_num(86), c.check_num(56))
     print(c.path2string(c.num_path(64)))
+    p = Parents(56)
+    print(p.check_parents(10))
+    print(nn.get_names(p.check_parents_not_included(c)))
