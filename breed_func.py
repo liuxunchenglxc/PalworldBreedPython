@@ -141,7 +141,7 @@ class Parents:
         self.start_num = str(start_num)
         self.be = BreedEquals()
         self.nn = NameNum()
-        self.parents = []
+        self.parents = {}
         check_list = [self.start_num]
         checked_list = [None]
         while check_list:
@@ -154,9 +154,15 @@ class Parents:
                     if p2 not in checked_list:
                         check_list.append(p2)
                     if p1 not in self.parents:
-                        self.parents.append(p1)
+                        if off in self.parents:
+                            self.parents[p1] = self.parents[off] + 1
+                        else:
+                            self.parents[p1] = 1
                     if p2 not in self.parents:
-                        self.parents.append(p2)
+                        if off in self.parents:
+                            self.parents[p2] = self.parents[off] + 1
+                        else:
+                            self.parents[p2] = 1
             checked_list.append(off)
 
     def check_parents(self, p_num):
@@ -169,7 +175,7 @@ class Parents:
     def check_parents_not_included(self, closure: Closure):
         nums = closure.get_closure_all_num()
         not_included = []
-        for p in self.parents:
+        for p in list(self.parents.keys()):
             if p not in nums:
                 not_included.append(p)
         return not_included
@@ -201,7 +207,7 @@ if __name__ == '__main__':
 
     print("Build Parents...")
     p = Parents(64)
-    print("Show all parent:", p.parents)
+    print("Show all parent {p: generation}:", p.parents)
     print("Check num 10:", p.check_parents(10))
     print("Check num 93:", p.check_parents(93))
     print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
