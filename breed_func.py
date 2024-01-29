@@ -180,6 +180,12 @@ class Parents:
                 not_included.append(p)
         return not_included
 
+    def display_parents_with_generation_and_name(self, not_included):
+        r = {}
+        for num in not_included:
+            r[self.be.get_name(num)] = self.parents[num]
+        return r
+
 if __name__ == '__main__':
     print("Init Name Num table...")
     nn = NameNum()
@@ -210,4 +216,4 @@ if __name__ == '__main__':
     print("Show all parent {p: generation}:", p.parents)
     print("Check num 10:", p.check_parents(10))
     print("Check num 93:", p.check_parents(93))
-    print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
+    print("Check Closure not included:", p.display_parents_with_generation_and_name())
