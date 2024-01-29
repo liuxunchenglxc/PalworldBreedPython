@@ -63,7 +63,7 @@ class BreedEquals:
     def get_parents(self, off:str):
         if off in self.parents:
             return self.parents[off]
-        return None, None
+        return None
 
 
 class Closure:
@@ -200,7 +200,7 @@ if __name__ == '__main__':
 
     print("Build Parents...")
     p = Parents(64)
-    print("Show all parent {p: off}:", p.parents)
+    print("Show all parent:", p.parents)
     print("Check num 10:", p.check_parents(10))
     print("Check num 93:", p.check_parents(93))
     print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
