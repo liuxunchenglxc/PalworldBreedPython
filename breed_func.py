@@ -143,7 +143,7 @@ class Parents:
         checked_list = [None]
         while check_list:
             off = check_list.pop()
-            p1, p2 = self.be.get_parents()
+            p1, p2 = self.be.get_parents(off)
             if p1 not in checked_list:
                 check_list.append(p1)
             if p2 not in checked_list:
