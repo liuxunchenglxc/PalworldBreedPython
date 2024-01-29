@@ -183,7 +183,7 @@ class Parents:
     def display_parents_with_generation_and_name(self, not_included):
         r = {}
         for num in not_included:
-            r[self.be.get_name(num)] = self.parents[num]
+            r[self.nn.get_name(num)] = self.parents[num]
         return r
 
 if __name__ == '__main__':
