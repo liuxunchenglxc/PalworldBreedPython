@@ -216,4 +216,4 @@ if __name__ == '__main__':
     print("Show all parent {p: generation}:", p.parents)
     print("Check num 10:", p.check_parents(10))
     print("Check num 93:", p.check_parents(93))
-    print("Check Closure not included:", p.display_parents_with_generation_and_name())
+    print("Check Closure not included:", p.display_parents_with_generation_and_name(p.check_parents_not_included(c)))
