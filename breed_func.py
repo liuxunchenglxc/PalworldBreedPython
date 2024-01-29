@@ -151,7 +151,7 @@ class Parents:
             if p1:
                 self.parents[p1] = off
             if p2:
-            self.parents[p2] = off
+                self.parents[p2] = off
             checked_list.append(off)
 
     def check_parents(self, p_num):
