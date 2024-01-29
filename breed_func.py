@@ -43,7 +43,10 @@ class BreedEquals:
                 self.offsprings[p2][p1] = off
             else:
                 self.offsprings[p2] = {p1: off}
-            self.parents[off] = (p1, p2)
+            if off in self.parents:
+                self.parents[off].append((p1, p2))
+            else:
+                self.parents[off]= [(p1, p2)]
 
     def get_all_offspring(self, p1: str):
         if p1 in self.offsprings:
@@ -138,25 +141,26 @@ class Parents:
         self.start_num = str(start_num)
         self.be = BreedEquals()
         self.nn = NameNum()
-        self.parents = {}
+        self.parents = []
         check_list = [self.start_num]
         checked_list = [None]
         while check_list:
             off = check_list.pop()
-            p1, p2 = self.be.get_parents(off)
-            if p1 not in checked_list:
-                check_list.append(p1)
-            if p2 not in checked_list:
-                check_list.append(p2)
-            if p1:
-                self.parents[p1] = off
-            if p2:
-                self.parents[p2] = off
+            ps = self.be.get_parents(off)
+            for p1, p2 in ps:
+                if p1 not in checked_list:
+                    check_list.append(p1)
+                if p2 not in checked_list:
+                    check_list.append(p2)
+                if p1 not in self.parents:
+                    self.parents.append(p1)
+                if p2 not in self.parents:
+                    self.parents.append(p2)
             checked_list.append(off)
 
     def check_parents(self, p_num):
         p = str(p_num)
-        if p in list(self.parents.keys()):
+        if p in self.parents:
             return True
         else:
             return False
@@ -164,7 +168,7 @@ class Parents:
     def check_parents_not_included(self, closure: Closure):
         nums = closure.get_closure_all_num()
         not_included = []
-        for p in list(self.parents.keys()):
+        for p in self.parents:
             if p not in nums:
                 not_included.append(p)
         return not_included
@@ -198,4 +202,5 @@ if __name__ == '__main__':
     p = Parents(64)
     print("Show all parent {p: off}:", p.parents)
     print("Check num 10:", p.check_parents(10))
+    print("Check num 93:", p.check_parents(93))
     print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
