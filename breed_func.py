@@ -195,7 +195,7 @@ if __name__ == '__main__':
     print()
 
     print("Build Parents...")
-    p = Parents(56)
+    p = Parents(64)
     print("Show all parent {p: off}:", p.parents)
     print("Check num 10:", p.check_parents(10))
     print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
