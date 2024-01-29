@@ -147,15 +147,16 @@ class Parents:
         while check_list:
             off = check_list.pop()
             ps = self.be.get_parents(off)
-            for p1, p2 in ps:
-                if p1 not in checked_list:
-                    check_list.append(p1)
-                if p2 not in checked_list:
-                    check_list.append(p2)
-                if p1 not in self.parents:
-                    self.parents.append(p1)
-                if p2 not in self.parents:
-                    self.parents.append(p2)
+            if ps:
+                for p1, p2 in ps:
+                    if p1 not in checked_list:
+                        check_list.append(p1)
+                    if p2 not in checked_list:
+                        check_list.append(p2)
+                    if p1 not in self.parents:
+                        self.parents.append(p1)
+                    if p2 not in self.parents:
+                        self.parents.append(p2)
             checked_list.append(off)
 
     def check_parents(self, p_num):
