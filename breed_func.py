@@ -170,15 +170,32 @@ class Parents:
         return not_included
 
 if __name__ == '__main__':
+    print("Init Name Num table...")
     nn = NameNum()
-    # print(nn.name2num, nn.num2name)
+    print(nn.name2num, nn.num2name)
+    print()
+    print("Init Name Num table OK")
+    print()
+    
+    print("Init BreedEquals...")
     be = BreedEquals()
-    # print(be.offsprings, be.parents)
+    print(be.offsprings, be.parents)
+    print("Init BreedEquals OK")
+    print()
+    
+    print("Build Closure with nums of 1,2,3,4,5,11,12,13,14,15")
     c = Closure()
     c.add_pals([1,2,3,4,5,11,12,13,14,15])
     print(c.get_closure_key_as_name())
-    print(c.check_num(86), c.check_num(56))
+    print("Check num 86:", c.check_num(86))
+    print("Check num 56:", c.check_num(56))
+    print("Print Shortest Path to num 64:")
     print(c.path2string(c.num_path(64)))
+    print("Closure OK")
+    print()
+
+    print("Build Parents...")
     p = Parents(56)
-    print(p.check_parents(10))
-    print(nn.get_names(p.check_parents_not_included(c)))
+    print("Show all parent {p: off}:", p.parents)
+    print("Check num 10:", p.check_parents(10))
+    print("Check Closure not included:", nn.get_names(p.check_parents_not_included(c)))
